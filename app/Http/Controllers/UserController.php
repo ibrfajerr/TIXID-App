@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use function PHPUnit\Framework\returnArgument;
 
 class UserController extends Controller
 {
@@ -87,6 +86,32 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $request->validate([
+            'name' => 'required|min:3',
+            'email' => 'required|email:dns',
+            'password'=> 'required|min:8',
+        ], [
+            'name.required' => 'Nama wajib di isi',
+            'name.min' => 'Nama wajib diisi minimal 3 huruf',
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Email wajib diisi dengan data yang valid',
+            'password.required' => 'Password wajib diisi!',
+            'password.min' => 'Password wajib diisi minimal 8 karakter',
+        ]);
+
+        // kirim data
+        $updateData = User::where('id', $id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password'=> Hash::make($request->password),
+        ]);
+
+        // update data
+        if ($updateData) {
+            return redirect()->route('admin.staffs.index')->with('success', 'Berhasil mengubah data pengguna');
+        } else {
+            return redirect()->back()->with('failed', 'Gagal! Silahkan coba lagi');
+        }
     }
 
     /**

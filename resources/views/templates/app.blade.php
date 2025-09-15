@@ -21,8 +21,8 @@
         <div class="container">
             <!-- Navbar brand -->
             <a class="navbar-brand me-2" href="https://mdbgo.com/">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_Y2EbEoJm56vuOqqCCKeSiskwS4hs3EM3TcFymON6CC0THuHkeE4EB9RuWXnHq1wzut4&usqp=CAU"
-                    height="20" alt="MDB Logo" loading="lazy" style="margin-top: -1px;" />
+                <img src="https://asset.tix.id/wp-content/uploads/2021/10/TIXID_logo_blue-300x82.png"
+                    height="18" alt="MDB Logo" loading="lazy" style="margin-top: -1px;" />
             </a>
 
             <!-- Toggle button -->
