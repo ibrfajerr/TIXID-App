@@ -23,7 +23,7 @@
         <!-- Container wrapper -->
         <div class="container">
             <!-- Navbar brand -->
-            <a class="navbar-brand me-2" href="https://mdbgo.com/">
+            <a class="navbar-brand me-2" href="{{ route('home') }}">
                 <img src="https://asset.tix.id/wp-content/uploads/2021/10/TIXID_logo_blue-300x82.png" height="18"
                     alt="MDB Logo" loading="lazy" style="margin-top: -1px;" />
             </a>
@@ -40,7 +40,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     @if (Auth::check() && Auth::user()->role == 'admin')
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Dashboard</a>
+                            <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a data-mdb-dropdown-init class="nav-link dropdown-toggle" href="#"
@@ -58,6 +58,13 @@
                                     <a class="dropdown-item" href="{{ route('admin.staffs.index') }}">Data Petugas</a>
                                 </li>
                             </ul>
+                        </li>
+                    @elseif (Auth::check() && Auth::user()->role == 'staff')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('staff.dashboard') }}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('staff.promos.index') }}">Promo</a>
                         </li>
                     @else
                         <li class="nav-item">

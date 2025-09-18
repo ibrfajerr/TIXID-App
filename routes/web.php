@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\CinemaController;
+use App\Http\Controllers\PromoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 // route - controller - model - view : memerlukan data
 // route - view : tanpa data
 
-// prefix() : awalan, menulis /admin satu kali untuk 16 route CRUD
+// prefix() : awalan, menulstaff satu kali untuk 16 route CRUD
 // name('admin.') : pakai titik krna nnti akan digabungkan
 // middleware('idAdmin') : memanggil middleware yg akan digunakan
 // middleware : authorization, pengaturan hak akses pengguna
@@ -62,7 +63,7 @@ Route::middleware('isAdmin')->prefix('/admin')->name('admin.')->group(function (
         return view('admin.dashboard');
     })->name('dashboard');
 
-    // bioskop
+    // Bioskop
     Route::prefix('/cinemas')->name('cinemas.')->group(function () {
         Route::get('/', [CinemaController::class, 'index'])->name('index');
 
@@ -76,7 +77,7 @@ Route::middleware('isAdmin')->prefix('/admin')->name('admin.')->group(function (
         Route::delete('/delete/{id}', [CinemaController::class,'destroy'])->name('delete');
     });
 
-    // staff
+    // Staff
     Route::prefix('/staffs')->name('staffs.')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
 
@@ -103,8 +104,20 @@ Route::middleware('isAdmin')->prefix('/admin')->name('admin.')->group(function (
     });
 });
 
-Route::prefix('/staff')->name('staff.')->group(function () {
-    Route::get('/', function () {
+// Middleware Staff
+Route::middleware('isStaff')->prefix('/staff')->name('staff.')->group(function () {
+    Route::get('/dashboard', function () {
         return view('staff.dashboard');
     })->name('dashboard');
+
+    // Promo
+    Route::prefix('/promos')->name('promos.')->group(function () {
+        Route::get('/', [PromoController::class, 'index'])->name('index');
+        Route::get('/create', [PromoController::class,'create'])->name('create');
+        Route::post('/store', [PromoController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [PromoController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [PromoController::class,'update'])->name('update');
+        Route::delete('/delete/{id}', [PromoController::class,'destroy'])->name('delete');
+        Route::get('/inactive/{id}', [PromoController::class,'inactive'])->name('inactive');
+    });
 });

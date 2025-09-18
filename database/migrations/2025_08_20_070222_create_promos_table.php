@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('promo_code');
             $table->integer('discount');
             $table->enum('type', ['precent', 'rupiah']);
-            $table->boolean('activated');
+            $table->boolean('actived');
             $table->timestamps();
             $table->softDeletes();
         });

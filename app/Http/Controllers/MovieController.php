@@ -175,6 +175,16 @@ class MovieController extends Controller
     public function destroy($id)
     {
         // menghapus data
+        $movie = Movie::find($id);
+        if ($movie->poster) {
+            // storage_path() : cek apakah ada file sebelumnya di folder app/public/storage
+            $fileSebelumnya = storage_path('app/public/' .  $movie['poster']);
+            if (file_exists($fileSebelumnya)) {
+                // hapus file sebelumnya
+                unlink($fileSebelumnya);
+            }
+        }
+
         $deleteData = Movie::where('id', $id)->delete();
         if ($deleteData) {
             return redirect()->route('admin.movies.index')->with('success','Berhasil menghapus data film');
@@ -187,8 +197,8 @@ class MovieController extends Controller
     {
         // where ('field', 'value') -> mencari data
         // get() -> mengambil semua data dari hasil filter
-        $movie = Movie::where('actived', 1)->get();
-        return view('home', compact('movie'));
+        $movies = Movie::where('actived', 1)->get();
+        return view('home', compact('movies'));
     }
 
     public function inactive($id)
