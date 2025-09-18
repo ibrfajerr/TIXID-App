@@ -84,46 +84,21 @@
 
     <div class="mt-1 d-flex justify-content-center container gap-2">
 
-        {{-- card 1 --}}
-        <div class="card shadow-sm" style="width: 18rem;">
-            <img src="https://upload.wikimedia.org/wikipedia/id/4/4a/Oppenheimer_%28film%29.jpg" class="card-img-top"
-                style="object-fit: cover; object-position: bottom; height: 450px" alt="Poster Oppenheimer" />
-            {{-- !important : memprioritaskan jika ada style padding dari bootstrap akan dibaca yang di style ( diutamakan ) --}}
-            <div class="card-body text-center p-2" style="padding: 0 !important">
-                <a href="{{ route('schedules.detail') }}"
-                    class="btn btn-primary w-100 text-warning text-center fw-bold ">Beli</a>
+        @foreach ($movies as $movie)
+            <div class="card shadow-sm" style="width: 18rem;">
+                <img src="{{ asset('storage/' . $movie['poster']) }}" class="card-img-top"
+                    style="object-fit: cover; object-position: bottom" alt="{{ $movie['title'] }}" height="450" />
+                {{-- !important : memprioritaskan jika ada style padding dari bootstrap akan dibaca yang di style ( diutamakan ) --}}
+                <div class="card-body text-center p-2" style="padding: 0 !important">
+                    <p class="card-text text-center bg-primary py-2">
+                        <a href="{{ route('schedules.detail') }}" class="btn btn-primary w-100 text-warning text-center fw-bold ">
+                            <b>Beli Tiket</b>
+                        </a>
+                    </p>
+                </div>
             </div>
-        </div>
+        @endforeach
 
-        {{-- card 2 --}}
-        <div class="card shadow-sm" style="width: 18rem;">
-            <img src="https://m.media-amazon.com/images/M/MV5BNTc0YmQxMjEtODI5MC00NjFiLTlkMWUtOGQ5NjFmYWUyZGJhXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
-                class="card-img-top" style="object-fit: cover; object-position: bottom; height: 450px"
-                alt="Poster Dune 2" />
-            <div class="card-body text-center p-2" style="padding: 0 !important">
-                <a href="{{ route('schedules.detail') }}" class="btn btn-primary w-100 text-warning  fw-bold">Beli</a>
-            </div>
-        </div>
-
-        {{-- card 3 --}}
-        <div class="card shadow-sm" style="width: 18rem;">
-            <img src="https://m.media-amazon.com/images/M/MV5BYzk4MWZkMDgtN2UwZC00ZjVlLWE1M2ItYjY4NWEwN2YwOGYxXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
-                class="card-img-top" style="object-fit: cover; object-position: bottom; height: 450px"
-                alt="Poster Fallout" />
-            <div class="card-body text-center p-2" style="padding:0 !important">
-                <a href="{{ route('schedules.detail') }}" class="btn btn-primary w-100 text-warning fw-bold">Beli</a>
-            </div>
-        </div>
-
-        {{-- card 4 --}}
-        <div class="card shadow-sm" style="width: 18rem;">
-            <img src="https://m.media-amazon.com/images/M/MV5BOGMwZGJiM2EtMzEwZC00YTYzLWIxNzYtMmJmZWNlZjgxZTMwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
-                class="card-img-top" style="object-fit: cover; object-position: bottom; height: 450px"
-                alt="Poster Superman 2025" />
-            <div class="card-body text-center p-2" style="padding: 0 !important">
-                <a href="{{ route('schedules.detail') }}" class="btn btn-primary w-100 text-warning  fw-bold">Beli</a>
-            </div>
-        </div>
     </div>
 
     <footer class="bg-body-tertiary text-center text-lg-start mt-4">

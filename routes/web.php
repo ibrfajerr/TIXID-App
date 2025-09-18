@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\CinemaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -10,18 +11,19 @@ use Illuminate\Support\Facades\Route;
 // 3. patch / put -> mengubah data
 // 4. delete -> menghapus data
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
-Route::get('/sign-up', function () {
-    return view('signup');
-})->name('sign_up');
-
 // path : kebab, name : snack
 
 // route - controller - model - view : memerlukan data
 // route - view : tanpa data
+
+// prefix() : awalan, menulis /admin satu kali untuk 16 route CRUD
+// name('admin.') : pakai titik krna nnti akan digabungkan
+// middleware('idAdmin') : memanggil middleware yg akan digunakan
+// middleware : authorization, pengaturan hak akses pengguna
+
+Route::get('/', function () {
+    return view('home');
+})->name('home');
 
 Route::get('/login', function () {
     return view('login');
@@ -35,10 +37,8 @@ Route::post('/sign-up', [UserController::class, 'signUp'])->name('sign_up.add');
 Route::post('/login', [UserController::class,'loginAuth'])->name('login.auth');
 Route::get('/logout', [UserController::class,'logout'])->name('logout');
 
-// prefix() : awalan, menulis /admin satu kali untuk 16 route CRUD
-// name('admin.') : pakai titik krna nnti akan digabungkan
-// middleware('idAdmin') : memanggil middleware yg akan digunakan
-// middleware : authorization, pengaturan hak akses pengguna
+// Beranda
+Route::get('/', [MovieController::class,'home'])->name('home');
 
 // Middleware Guest
 Route::middleware('isGuest')->group(function () {
@@ -90,4 +90,21 @@ Route::middleware('isAdmin')->prefix('/admin')->name('admin.')->group(function (
         Route::delete('/delete/{id}', [UserController::class,'destroy'])->name('delete');
 
     });
+
+    // Movie
+    Route::prefix('/movies')->name('movies.')->group(function () {
+        Route::get('/', [MovieController::class, 'index'])->name('index');
+        Route::get('/create', [MovieController::class, 'create'])->name('create');
+        Route::post('/store', [MovieController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [MovieController::class,'edit'])->name('edit');
+        Route::put('/update/{id}', [MovieController::class,'update'])->name('update');
+        Route::delete('/delete/{id}', [MovieController::class,'destroy'])->name('delete');
+        Route::get('/inactive/{id}', [MovieController::class,'inactive'])->name('inactive');
+    });
+});
+
+Route::prefix('/staff')->name('staff.')->group(function () {
+    Route::get('/', function () {
+        return view('staff.dashboard');
+    })->name('dashboard');
 });
