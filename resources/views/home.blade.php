@@ -65,7 +65,7 @@
             <h5 class="mt-2">Sedang Tayang</h5>
         </div>
         <div>
-            <a href="" class="btn btn-warning rounded-pill">Semua <i class="fa-solid fa-angle-right"></i></a>
+            <a href="{{ route('home.movies') }}" class="btn btn-warning rounded-pill">Semua <i class="fa-solid fa-angle-right"></i></a>
         </div>
     </div>
 

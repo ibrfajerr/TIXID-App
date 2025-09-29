@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\MovieExport;
 
 class MovieController extends Controller
 {
@@ -197,7 +200,10 @@ class MovieController extends Controller
     {
         // where ('field', 'value') -> mencari data
         // get() -> mengambil semua data dari hasil filter
-        $movies = Movie::where('actived', 1)->get();
+        // DESC = a-z 0-9 terbaru-terlama
+        // ASC = z-a 9-0 terlama-terbaru
+        // limit() : mengambil sejumlah yang ditentukan
+        $movies = Movie::where('actived', 1)->orderBy('created_at', 'DESC')->limit(4)->get();
         return view('home', compact('movies'));
     }
 
@@ -211,5 +217,19 @@ class MovieController extends Controller
         } else {
             return redirect()->back()->with('failed','Gagal non-aktifkan film');
         }
+    }
+
+    public function export()
+    {
+        // nama file yang akan diunduh
+        $fileName = 'data-film.xlsx';
+        // proses unduh
+        return Excel::download(new MovieExport, $fileName);
+    }
+
+    public function homeAllMovies()
+    {
+        $movies = Movie::where('actived', 1)->orderBy('created_at', 'DESC')->get();
+        return view('home_movies', compact('movies'));
     }
 }

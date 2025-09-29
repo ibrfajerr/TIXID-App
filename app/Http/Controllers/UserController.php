@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UserExport;
 
 class UserController extends Controller
 {
@@ -207,5 +209,13 @@ class UserController extends Controller
         // Auth::logout() -> menghapus sesi login / sesi auth
         Auth::logout();
         return redirect()->route('home')->with('logout','Berhasil logout! silahkan login kembali untuk akses lengkap');
+    }
+
+    public function export()
+    {
+        // nama file yang akan diunduh
+        $fileName = 'data-pengguna.xlsx';
+        // proses unduh
+        return Excel::download(new UserExport, $fileName);
     }
 }

@@ -41,6 +41,8 @@ Route::get('/logout', [UserController::class,'logout'])->name('logout');
 // Beranda
 Route::get('/', [MovieController::class,'home'])->name('home');
 
+Route::get('/home/movies', [MovieController::class, 'homeAllMovies'])->name('home.movies');
+
 // Middleware Guest
 Route::middleware('isGuest')->group(function () {
     Route::get('/login', function () {
@@ -75,6 +77,7 @@ Route::middleware('isAdmin')->prefix('/admin')->name('admin.')->group(function (
         Route::get('/edit/{id}', [CinemaController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [CinemaController::class,'update'])->name('update');
         Route::delete('/delete/{id}', [CinemaController::class,'destroy'])->name('delete');
+        Route::get('/export', [CinemaController::class, 'export'])->name('export');
     });
 
     // Staff
@@ -89,6 +92,7 @@ Route::middleware('isAdmin')->prefix('/admin')->name('admin.')->group(function (
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [UserController::class,'update'])->name('update');
         Route::delete('/delete/{id}', [UserController::class,'destroy'])->name('delete');
+        Route::get('/export', [UserController::class, 'export'])->name('export');
 
     });
 
@@ -101,6 +105,7 @@ Route::middleware('isAdmin')->prefix('/admin')->name('admin.')->group(function (
         Route::put('/update/{id}', [MovieController::class,'update'])->name('update');
         Route::delete('/delete/{id}', [MovieController::class,'destroy'])->name('delete');
         Route::get('/inactive/{id}', [MovieController::class,'inactive'])->name('inactive');
+        Route::get('/export', [MovieController::class, 'export'])->name('export');
     });
 });
 
