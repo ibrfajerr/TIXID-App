@@ -14,6 +14,14 @@ class Cinema extends Model
         'name',
         'location',
     ];
+
+    public function schedules()
+    {
+        // pendefinisian jenis relasi ( one to one / one to many )
+        // one to one = hasOne
+        // one to many = hasMany
+        return $this->hasMany(Schedule::class);
+    }
 }
 
 

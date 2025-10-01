@@ -32,7 +32,7 @@
 
             <!-- 2 column grid layout for inline styling -->
             <div class="row mb-4">
-                <div class="col d-flex justify-content-center">
+                <div class="col d-flex">
                     <!-- Checkbox -->
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="form2Example34" checked />
@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                <div class="col">
+                <div class="col d-flex justify-content-end">
                     <!-- Simple link -->
                     <a href="#!">Forgot password?</a>
                 </div>

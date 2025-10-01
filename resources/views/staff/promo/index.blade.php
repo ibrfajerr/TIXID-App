@@ -12,6 +12,7 @@
             <div class="alert alert-danger">{{ Session::get('failed') }}</div>
         @endif
         <div class="d-flex justify-content-end mb-3 mt-4">
+            <a href="{{ route('staff.promos.export') }}" class="btn btn-secondary me-2">Export (.xlsx)</a>
             <a href="{{ route('staff.promos.create') }}" class="btn btn-success">Tambah Data</a>
         </div>
         <h5>Data Promo</h5>

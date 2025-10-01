@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Schedule;
+use App\Models\Movie;
+use App\Models\Cinema;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
@@ -13,6 +15,10 @@ class ScheduleController extends Controller
     public function index()
     {
         //
+        $cinemas = Cinema::all();
+        $movies = Movie::all();
+
+        return view('staff.schedule.index', compact('cinemas', 'movies'));
     }
 
     /**
@@ -29,6 +35,18 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'cinema_id'=>'required',
+            'movie_id'=>'required',
+            'price'=>'required|numeric',
+            'hours.*'=>'required',
+        ], [
+            'cinema_id.required'=>'Bioskop harus dipilih',
+            'movie_id.required'=>'Film harus dipilih',
+            'price.required'=>'Harga harus diisi',
+            'price.numeric'=>'Harga harus diisi berupa angka',
+            'hours.*.required'=>'Jam harus diisi minimal satu data jam',
+        ]);
     }
 
     /**

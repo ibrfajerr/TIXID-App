@@ -10,7 +10,7 @@
                 Tambah Data
             </a>
         </div>
-        <h5 class="mt-3">Data Film</h5>
+        <h5>Data Film</h5>
         <table class="table table-bordered">
             <tr>
                 <th>#</th>

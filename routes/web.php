@@ -4,6 +4,7 @@ use App\Http\Controllers\MovieController;
 use App\Http\Controllers\CinemaController;
 use App\Http\Controllers\PromoController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
 // http method route
@@ -124,5 +125,11 @@ Route::middleware('isStaff')->prefix('/staff')->name('staff.')->group(function (
         Route::put('/update/{id}', [PromoController::class,'update'])->name('update');
         Route::delete('/delete/{id}', [PromoController::class,'destroy'])->name('delete');
         Route::get('/inactive/{id}', [PromoController::class,'inactive'])->name('inactive');
+        Route::get('/export', [PromoController::class, 'export'])->name('export');
+    });
+
+    Route::prefix('/schedules')->name('schedules.')->group(function () {
+        Route::get('/', [ScheduleController::class, 'index'])->name('index');
+        Route::post('/store', [ScheduleController::class, 'store'])->name('store');
     });
 });

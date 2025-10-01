@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Promo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PromoExport;
 
 class PromoController extends Controller
 {
@@ -42,7 +44,7 @@ class PromoController extends Controller
             'type.required' => ' Promo harus diisi',
         ]);
 
-        $promoCode = "promo" . Str::random(5);
+        $promoCode = "PRM" . Str::random(5);
         // kirim data
         $createPromo = Promo::create([
             'promo_code'=> $promoCode,
@@ -134,5 +136,13 @@ class PromoController extends Controller
         } else {
             return redirect()->back()->with('failed','Gagal non-aktifkan promo');
         }
+    }
+
+    public function export()
+    {
+        // nama file yang akan diunduh
+        $fileName = 'data-promo.xlsx';
+        // proses unduh
+        return Excel::download(new PromoExport, $fileName);
     }
 }

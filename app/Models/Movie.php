@@ -12,4 +12,9 @@ class Movie extends Model
 
     protected $fillable = ['title', 'genre', 'director',
     'duration', 'description', 'poster', 'age_rating', 'actived'];
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
 }
