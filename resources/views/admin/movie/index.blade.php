@@ -1,8 +1,14 @@
 @extends('templates.app')
 @section('content')
+    @if (Session::get('success'))
+        <div class="alert alert-success alert-dismissible fade show alert-top-right" role="alert">
+            {{ Session::get('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <div class="container mt-5">
-        @if (Session::get('success'))
-            <div class="alert alert-success">{{ Session::get('success') }}</div>
+        @if (Session::get('failed'))
+            <div class="alert alert-danger">{{ Session::get('failed') }}</div>
         @endif
         <div class="d-flex justify-content-end">
             <a href="{{ route('admin.movies.export') }}" class="btn btn-secondary me-2">Export (.xlsx)</a>

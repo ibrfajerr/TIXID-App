@@ -12,6 +12,7 @@
             <div class="alert alert-danger">{{ Session::get('failed') }}</div>
         @endif
         <div class="d-flex justify-content-end mb-3 mt-4">
+            <a href="{{ route('staff.promos.trash') }}" class="btn btn-secondary me-2">Data Sampah</a>
             <a href="{{ route('staff.promos.export') }}" class="btn btn-secondary me-2">Export (.xlsx)</a>
             <a href="{{ route('staff.promos.create') }}" class="btn btn-success">Tambah Data</a>
         </div>
@@ -29,7 +30,7 @@
                 <tr>
                     <td class="text-center">{{ $key + 1 }}</td>
                     <td>{{ $promo->promo_code }}</td>
-                    <td>{{ $promo->type == 'precent' ? $promo->discount . '%' : 'Rp ' . $promo->discount }}</td>
+                    <td>{{ $promo->type == 'precent' ? $promo->discount . '%' : 'Rp. ' . $promo->discount }}</td>
                     <td>{{ $promo->type == 'precent' ? 'Persen' : 'Rupiah' }}</td>
                     <td>
                         @if ($promo->actived == 1)

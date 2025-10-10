@@ -44,20 +44,21 @@ class PromoController extends Controller
             'type.required' => ' Promo harus diisi',
         ]);
 
-        $promoCode = "PRM" . Str::random(5);
+        $promoRandom = "PRM" . Str::random(5);
+        $promoCode = strtoupper($promoRandom);
         // kirim data
         $createPromo = Promo::create([
-            'promo_code'=> $promoCode,
+            'promo_code' => $promoCode,
             'discount' => $request->discount,
             'type' => $request->type,
-            'actived'=> 1,
+            'actived' => 1,
         ]);
 
         // redirect / perpindahan halaman
         if ($createPromo) {
-            return redirect()->route('staff.promos.index')->with('success','Berhasil membuat data Promo');
+            return redirect()->route('staff.promos.index')->with('success', 'Berhasil membuat data Promo');
         } else {
-            return redirect()->back()->with('failed','Gagal membuat data Promo');
+            return redirect()->back()->with('failed', 'Gagal membuat data Promo');
         }
     }
 
@@ -97,18 +98,18 @@ class PromoController extends Controller
         // kirim data
         $findPromo = Promo::find($id);
 
-        $updatePromo = Promo::where('id',$id)->update([
-            'promo_code'=> $findPromo->promo_code,
+        $updatePromo = Promo::where('id', $id)->update([
+            'promo_code' => $findPromo->promo_code,
             'discount' => $request->discount,
             'type' => $request->type,
-            'actived'=> 1,
+            'actived' => 1,
         ]);
 
         // redirect / perpindahan halaman
         if ($updatePromo) {
-            return redirect()->route('staff.promos.index')->with('success','Berhasil mengubah data Promo');
+            return redirect()->route('staff.promos.index')->with('success', 'Berhasil mengubah data Promo');
         } else {
-            return redirect()->back()->with('failed','Gagal mengubah data Promo');
+            return redirect()->back()->with('failed', 'Gagal mengubah data Promo');
         }
     }
 
@@ -120,21 +121,21 @@ class PromoController extends Controller
         //
         $deleteData = Promo::where('id', $id)->delete();
         if ($deleteData) {
-            return redirect()->route('staff.promos.index')->with('success','Berhasil menghapus data promo');
+            return redirect()->route('staff.promos.index')->with('success', 'Berhasil menghapus data promo');
         } else {
-            return redirect()->back()->with('failed','Gagal menghapus data promo');
+            return redirect()->back()->with('failed', 'Gagal menghapus data promo');
         }
     }
 
     public function inactive($id)
     {
         $inactivePromo = Promo::where('id', $id)->update([
-            'actived'=> 0
+            'actived' => 0
         ]);
         if ($inactivePromo) {
-            return redirect()->route('staff.promos.index')->with('success','Berhasil non-aktifkan promo');
+            return redirect()->route('staff.promos.index')->with('success', 'Berhasil non-aktifkan promo');
         } else {
-            return redirect()->back()->with('failed','Gagal non-aktifkan promo');
+            return redirect()->back()->with('failed', 'Gagal non-aktifkan promo');
         }
     }
 
@@ -144,5 +145,26 @@ class PromoController extends Controller
         $fileName = 'data-promo.xlsx';
         // proses unduh
         return Excel::download(new PromoExport, $fileName);
+    }
+
+    public function trash($id)
+    {
+        $promoTrash = Promo::onlyTrashed()->get();
+        return view('staff.promo.trash', compact('promoTrash'));
+    }
+
+    public function restore($id)
+    {
+        $promo = Promo::onlyTrashed()->find($id);
+        $promo->restore();
+        return redirect()->route('staff.promos.index')->with('success', 'Berhasil memulihkan data!');
+    }
+
+    public function deletePermanent($id)
+    {
+        // menghapus data secara permanen
+        $promo = Promo::onlyTrashed()->find($id);
+        $promo->forceDelete();
+        return redirect()->back()->with('success', 'Berhasil menghapus data secara permanen!');
     }
 }

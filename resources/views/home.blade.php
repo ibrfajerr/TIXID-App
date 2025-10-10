@@ -69,7 +69,7 @@
         </div>
     </div>
 
-    <div class="d-flex gap-2 container">
+    <div class="d-flex gap-2 container mt-2">
         <button type="button" class="btn btn-outline-primary rounded-pill" data-mdb-ripple-init
             data-mdb-ripple-color="dark">Semua Film</button>
         <button type="button" class="btn btn-outline-secondary rounded-pill" data-mdb-ripple-init
@@ -82,7 +82,7 @@
             data-mdb-ripple-color="dark">CGV</button>
     </div>
 
-    <div class="mt-1 d-flex justify-content-center container gap-2">
+    <div class="mt-1 d-flex justify-content-between container gap-2 mt-4">
 
         @foreach ($movies as $movie)
             <div class="card shadow-sm" style="width: 18rem;">
@@ -91,7 +91,7 @@
                 {{-- !important : memprioritaskan jika ada style padding dari bootstrap akan dibaca yang di style ( diutamakan ) --}}
                 <div class="card-body text-center p-2" style="padding: 0 !important">
                     <p class="card-text text-center bg-primary py-2">
-                        <a href="{{ route('schedules.detail') }}" class="btn btn-primary w-100 text-warning text-center fw-bold ">
+                        <a href="{{ route('schedules.detail', $movie['id']) }}" class="btn btn-primary w-100 text-warning text-center fw-bold ">
                             <b>Beli Tiket</b>
                         </a>
                     </p>

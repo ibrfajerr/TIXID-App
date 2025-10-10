@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -37,7 +38,7 @@ class MovieController extends Controller
         // dd($request->all());
         $request->validate([
             'title'=> 'required',
-            'durtion'=> 'reqired',
+            'duration'=> 'required',
             'genre'=> 'required',
             'director'=> 'required',
             'age_rating'=> 'required|numeric',
@@ -178,6 +179,11 @@ class MovieController extends Controller
     public function destroy($id)
     {
         // menghapus data
+        $schedules = Schedule::where('movie_id', $id)->count();
+        if ($schedules) {
+            return redirect()->route('admin.movies.index')->with('failed', 'Tidak dapat menghapus data film! Data tertaut dengan jadwal tayang');
+        }
+
         $movie = Movie::find($id);
         if ($movie->poster) {
             // storage_path() : cek apakah ada file sebelumnya di folder app/public/storage
@@ -231,5 +237,11 @@ class MovieController extends Controller
     {
         $movies = Movie::where('actived', 1)->orderBy('created_at', 'DESC')->get();
         return view('home_movies', compact('movies'));
+    }
+
+    public function movieSchedule($movie_id)
+    {
+        $movie = Movie::where('id', $movie_id)->with(['schedules', 'schedules.cinema'])->first();
+        return view('schedule.detail-film', compact('movie'));
     }
 }

@@ -11,7 +11,7 @@
                     {{-- !important : memprioritaskan jika ada style padding dari bootstrap akan dibaca yang di style ( diutamakan ) --}}
                     <div class="card-body text-center p-2" style="padding: 0 !important">
                         <p class="card-text text-center bg-primary py-2">
-                            <a href="{{ route('schedules.detail') }}"
+                            <a href="{{ route('schedules.detail', $movie['id']) }}"
                                 class="btn btn-primary w-100 text-warning text-center fw-bold ">
                                 <b>Beli Tiket</b>
                             </a>

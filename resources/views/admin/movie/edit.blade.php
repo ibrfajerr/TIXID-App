@@ -60,7 +60,8 @@
                 {{-- Poster Film --}}
                 <div class="col-6">
                     <label for="poster" class="form-label">Poster</label>
-                    <img src="{{ asset('storage/' . $movie['poster']) }}" alt="Poster Film" width="120" class="d-block mx-auto my-2">
+                    <img src="{{ asset('storage/' . $movie['poster']) }}" alt="Poster Film" width="120"
+                        class="d-block mx-auto my-2">
                     <input type="file" class="form-control @error('poster') is-invalid @enderror" name="poster"
                         id="poster">
                     @error('poster')
@@ -73,7 +74,8 @@
                 {{-- Sinopsis --}}
                 <div class="col-12">
                     <label for="description" class="form-label">Sinopsis</label>
-                    <textarea name="description" id="description" rows="10" class="form-control @error('description') is-invalid @enderror">{{ $movie['description'] }}</textarea>
+                    <textarea name="description" id="description" rows="10"
+                        class="form-control @error('description') is-invalid @enderror">{{ $movie['description'] }}</textarea>
                     @error('description')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
